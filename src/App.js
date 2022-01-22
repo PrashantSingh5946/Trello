@@ -5,10 +5,13 @@ import "./App.css";
 
 // fake data generator
 const getItems = (count, offset = 0) =>
-  Array.from({ length: count }, (v, k) => k).map((k) => ({
-    id: `item-${k + offset}-${new Date().getTime()}`,
-    content: `item ${k + offset}`,
-  }));
+{
+    return(Array.from({ length: count }, (v, k) => k).map((k) => ({
+        id: `item-${k + offset}-${new Date().getTime()}`,
+        content: `item ${k + offset}`,
+      })))
+}
+  
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -22,8 +25,9 @@ const reorder = (list, startIndex, endIndex) => {
  * Moves an item from one list to another list.
  */
 const move = (source, destination, droppableSource, droppableDestination) => {
-  const sourceClone = Array.from(source);
-  const destClone = Array.from(destination);
+
+  const sourceClone = Array.from(source.items);
+  const destClone = Array.from(destination.items);
   const [removed] = sourceClone.splice(droppableSource.index, 1);
 
   destClone.splice(droppableDestination.index, 0, removed);
@@ -31,7 +35,7 @@ const move = (source, destination, droppableSource, droppableDestination) => {
   const result = {};
   result[droppableSource.droppableId] = sourceClone;
   result[droppableDestination.droppableId] = destClone;
-
+  console.log(result)
   return result;
 };
 
@@ -56,8 +60,8 @@ export default function App() {
     } else {
       const result = move(state[sInd], state[dInd], source, destination);
       const newState = [...state];
-      newState[sInd] = result[sInd];
-      newState[dInd] = result[dInd];
+      newState[sInd].items = result[sInd];
+      newState[dInd].items = result[dInd];
 
       //Not deleting the collection once it is empty
       //setState(newState.filter((group) => group.length));
