@@ -102,6 +102,19 @@
   padding: 6px 8px;
 }
 
+.list-card button
+{
+  border: none;
+  border-radius: 50%;
+  font-size: 15px;
+  color:#333;
+  transition: 0.5s ease-in-out;
+}
+.list-card button:hover
+{
+  color: red;
+  font-size: 20px;
+}
 .addItem {
   padding: 10px;
   border-radius: 4px;
@@ -110,6 +123,19 @@
 .addItem:hover {
   background: #d1d3d8;
 }
+
+.addCategory
+{
+  padding: 15px;
+  border-radius: 3px;
+  background-color: #00000014;
+}
+
+.addCategory:hover
+{
+  background-color: #00000029;
+}
+
 
 /* custom scrollbar */
 ::-webkit-scrollbar {

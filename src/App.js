@@ -3,7 +3,9 @@ import ReactDOM from "react-dom";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import {v4} from "uuid";
 import "./App.css";
-import Collection from "./components/Collection";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import AddCategory from "./components/AddCategory";
 
 // fake data generator
 const getItems = (count, offset = 0) => {
@@ -83,14 +85,7 @@ export default function App() {
         <div className="collections-menu"></div>
         <div className="content board">
           <div>
-            <button
-              type="button"
-              onClick={() => {
-                setState([...state, { id:v4(),name: "New Category", items: [] }]);
-              }}
-            >
-              Add new group
-            </button>
+            
 
             <div style={{ display: "flex" }}>
               <DragDropContext onDragEnd={onDragEnd}>
@@ -124,7 +119,7 @@ export default function App() {
                                     <div
                                       style={{
                                         display: "flex",
-                                        justifyContent: "space-around",
+                                        justifyContent: "space-between",
                                       }}
                                     >
                                       {item.content}
@@ -136,7 +131,7 @@ export default function App() {
                                           setState(newState);
                                         }}
                                       >
-                                        delete
+                                        <FontAwesomeIcon icon={faTrash} />
                                       </button>
                                     </div>
                                   </div>
@@ -150,7 +145,11 @@ export default function App() {
                       <div className="addItem" onClick={() =>{addItem(el.id)}}>+ Add a Card</div>
                     </div>
                   </div>
-                ))}
+                ))
+                }
+                <div className="collection">
+              <AddCategory/>
+                </div>
               </DragDropContext>
             </div>
           </div>
