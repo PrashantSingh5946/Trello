@@ -122,8 +122,8 @@ export default function App() {
                                         const newState = [...state];
                                         newState[ind].items.splice(index, 1);
                                         setState(
-                                          newState.ifilter(
-                                            (group) => group.length
+                                          newState.filter(
+                                            (group) => group.items.length
                                           )
                                         );
                                       }}
