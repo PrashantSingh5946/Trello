@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import {v4} from "uuid";
+import { v4 } from "uuid";
 import "./App.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash,faSwatchbook } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faSwatchbook } from "@fortawesome/free-solid-svg-icons";
 import AddCategory from "./components/AddCategory";
 
 // fake data generator
@@ -41,20 +41,24 @@ const move = (source, destination, droppableSource, droppableDestination) => {
 
 export default function App() {
   const [state, setState] = useState([
-    { id:v4(),name: "All", items: getItems(10) },
-    { id:v4(),name: "In Progress", items: getItems(5, 10) },
+    { id: v4(), name: "All", items: getItems(10) },
+    { id: v4(), name: "In Progress", items: getItems(5, 10) },
   ]);
 
-  function addItem(collectionId)
-  {
-      const newState = [...state];
-      const index = state.findIndex((collection)=>collection.id===collectionId)
-      newState[index].items.push({id:`${v4}`,content:"New Item"})
-      setState(newState)
+  function addItem(collectionId) {
+    const newState = [...state];
+    const index = state.findIndex(
+      (collection) => collection.id === collectionId
+    );
+    newState[index].items.push({ id: `${v4}`, content: "New Item" });
+    setState(newState);
+  }
+
+  function addCategory(name) {
+    setState([...state, { id: v4(), name: name, items: [] }]);
   }
 
   function onDragEnd(result) {
-
     const { source, destination } = result;
 
     // dropped outside the list
@@ -81,81 +85,90 @@ export default function App() {
   return (
     <div className="App">
       <div className="navbar">
-          <FontAwesomeIcon icon={faSwatchbook}></FontAwesomeIcon>
-          <span>Boards</span>
+        <FontAwesomeIcon icon={faSwatchbook}></FontAwesomeIcon>
+        <span>Boards</span>
       </div>
       <div className="container">
         <div className="collections-menu"></div>
         <div className="content board">
-          <div>
-            
-
-            <div style={{ display: "flex" }}>
-              <DragDropContext onDragEnd={onDragEnd}>
-                {state.map((el, ind) => (
-                  <div className="collection">
-                    <div className="collection-wrapper">
-                      <div className="header">
-                        <h2>{el.name}</h2>
-                      </div>
-                      <Droppable key={ind} droppableId={`${ind}`}>
-                        {(provided, snapshot) => (
-                          <div
-                            ref={provided.innerRef}
-                            className="list"
-                            // style={getListStyle(snapshot.isDraggingOver)}
-                            {...provided.droppableProps}
-                          >
-                            {el.items.map((item, index) => (
-                              <Draggable
-                                key={item.id}
-                                draggableId={item.id}
-                                index={index}
-                              >
-                                {(provided, snapshot) => (
+          <DragDropContext onDragEnd={onDragEnd}>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
+                gap: "1rem",
+                alignItems: "flex-start",
+              }}
+            >
+              {state.map((el, ind) => (
+                <div className="collection">
+                  <div className="collection-wrapper">
+                    <div className="header">
+                      <h2>{el.name}</h2>
+                    </div>
+                    <Droppable key={ind} droppableId={`${ind}`}>
+                      {(provided, snapshot) => (
+                        <div
+                          ref={provided.innerRef}
+                          className="list"
+                          // style={getListStyle(snapshot.isDraggingOver)}
+                          {...provided.droppableProps}
+                        >
+                          {el.items.map((item, index) => (
+                            <Draggable
+                              key={item.id}
+                              draggableId={item.id}
+                              index={index}
+                            >
+                              {(provided, snapshot) => (
+                                <div
+                                  ref={provided.innerRef}
+                                  {...provided.draggableProps}
+                                  {...provided.dragHandleProps}
+                                  className="list-card"
+                                >
                                   <div
-                                    ref={provided.innerRef}
-                                    {...provided.draggableProps}
-                                    {...provided.dragHandleProps}
-                                    className="list-card"
+                                    style={{
+                                      display: "flex",
+                                      justifyContent: "space-between",
+                                    }}
                                   >
-                                    <div
-                                      style={{
-                                        display: "flex",
-                                        justifyContent: "space-between",
+                                    {item.content}
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        const newState = [...state];
+                                        newState[ind].items.splice(index, 1);
+                                        setState(newState);
                                       }}
                                     >
-                                      {item.content}
-                                      <button
-                                        type="button"
-                                        onClick={() => {
-                                          const newState = [...state];
-                                          newState[ind].items.splice(index, 1);
-                                          setState(newState);
-                                        }}
-                                      >
-                                        <FontAwesomeIcon icon={faTrash} />
-                                      </button>
-                                    </div>
+                                      <FontAwesomeIcon icon={faTrash} />
+                                    </button>
                                   </div>
-                                )}
-                              </Draggable>
-                            ))}
-                            {provided.placeholder}
-                          </div>
-                        )}
-                      </Droppable>
-                      <div className="addItem" onClick={() =>{addItem(el.id)}}>+ Add a Card</div>
+                                </div>
+                              )}
+                            </Draggable>
+                          ))}
+                          {provided.placeholder}
+                        </div>
+                      )}
+                    </Droppable>
+                    <div
+                      className="addItem"
+                      onClick={() => {
+                        addItem(el.id);
+                      }}
+                    >
+                      + Add a Card
                     </div>
                   </div>
-                ))
-                }
-                <div className="collection">
-              <AddCategory/>
                 </div>
-              </DragDropContext>
+              ))}
+              <div className="collection">
+                <AddCategory addCategory={addCategory} />
+              </div>
             </div>
-          </div>
+          </DragDropContext>
         </div>
       </div>
     </div>

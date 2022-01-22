@@ -1,10 +1,19 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus,faTimes } from "@fortawesome/free-solid-svg-icons";
 import CloseIcon from '@mui/icons-material/Close';
 
-export default function AddCategory() {
+export default function AddCategory({addCategory}) {
   const [isFormVisible, setFormVisibility] = useState(false);
+  const nameRef = useRef();
+  function submitHandler(e)
+  {
+      e.preventDefault();
+      const name = nameRef.current.value;
+      addCategory(name)
+      setFormVisibility(false)
+
+  }
   return (
     <div className="">
       {!isFormVisible && (
@@ -14,7 +23,7 @@ export default function AddCategory() {
             setFormVisibility(true);
           }}
         >
-          <span class="placeholder">
+          <span className="placeholder">
             <span style={{ marginRight: "5px" }}>
               <FontAwesomeIcon icon={faPlus} />
             </span>
@@ -23,12 +32,12 @@ export default function AddCategory() {
         </div>
       )}
       {isFormVisible && (
-        <form className="addList">
+        <form className="addList" onSubmit={submitHandler}>
           <div className="row">
-            <input type="text" placeholder="Enter list title..."></input>
+            <input type="text" placeholder="Enter list title..." ref={nameRef}></input>
           </div>
           <div className="row">
-              <button>Add List</button>
+              <button type="submit">Add List</button>
               <span className="close" onClick={()=>{setFormVisibility(false)}}><CloseIcon></CloseIcon></span>
               
           </div>
