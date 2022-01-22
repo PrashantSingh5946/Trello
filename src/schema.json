@@ -1,0 +1,18 @@
+[
+  {
+    "id": "ID000",
+    "name": "Name",
+    "lists": [
+      {
+        "listId": "Id",
+        "title": "Title of the list 1",
+        "listItems": ["list-itemID1", "list-itemID2"]
+      },
+      {
+        "listId": "Id",
+        "title": "Title of the list 2",
+        "listItems": ["list-itemID1", "list-itemID2"]
+      }
+    ]
+  }
+]

@@ -1,87 +1,106 @@
 .App {
   width: 1fr;
   height: 100vh;
-  background: #E0EAFC;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #CFDEF3, #E0EAFC);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #CFDEF3, #E0EAFC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  
-
+  background: #e0eafc; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #cfdef3,
+    #e0eafc
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #cfdef3,
+    #e0eafc
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  overflow: hidden;
 }
 
+.navbar {
+  height: 50px;
+  background: azure;
+}
 
-.collection
-{
+.container {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+.collection {
   background-color: #ebecf0;
   border-radius: 3px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   max-height: 100%;
-  position: absolute;
-  margin-left: 200px;
-  margin-top: 100px;
   white-space: normal;
   width: 272px;
   padding: 10px;
-
 }
 
-.collection .header
-{
-    display: flex;
-    min-height: 20px;
-    font-size: 20px;
-    /* padding: 10px 8px; */
-    position: relative;
-    margin-bottom: 5px;
-    align-items: baseline;
+.collections-menu {
+  width: 200px;
+  background: darkgray;
 }
 
-.collection .header h2
+.content {
+  width: 100%;
+}
+
+.board
 {
+  padding:  50px 100px;
+}
+
+.collection .header {
+  display: flex;
+  min-height: 20px;
+  font-size: 20px;
+  /* padding: 10px 8px; */
+  position: relative;
+  margin-bottom: 5px;
+  align-items: baseline;
+}
+
+.collection .header h2 {
   font-size: 16px;
   font-weight: 600;
   margin: 0px 5px;
 }
 
-.collection .header .ellipsis
-{
+.collection .header .ellipsis {
   margin-left: auto;
   margin-right: 8px;
 }
 
-.collection .list
-{
+.list {
   max-height: 400px;
   overflow-y: auto;
   margin-top: 5px;
   padding-right: 3px;
 }
 
-.collection .list-card
-{
+.list-card {
   background-color: #fff;
-    border-radius: 3px;
-    box-shadow: 0 1px 0 #091e4240;
-    cursor: pointer;
-    display: block;
-    margin-bottom: 8px;
-    max-width: 300px;
-    min-height: 20px;
-    position: relative;
-    text-decoration: none;
-    z-index: 0;
-    padding: 6px 8px;
+  border-radius: 3px;
+  box-shadow: 0 1px 0 #091e4240;
+  cursor: pointer;
+  display: block;
+  margin-bottom: 8px;
+  max-width: 300px;
+  min-height: 20px;
+  position: relative;
+  text-decoration: none;
+  z-index: 0;
+  padding: 6px 8px;
 }
 
-.addItem
-{
+.addItem {
   padding: 10px;
   border-radius: 4px;
 }
 
-.addItem:hover
-{
+.addItem:hover {
   background: #d1d3d8;
 }
 
