@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import {v4} from "uuid";
 import "./App.css";
+import Collection from "./components/Collection";
 
 // fake data generator
-const getItems = (count, offset = 0) =>
-{
-    return(Array.from({ length: count }, (v, k) => k).map((k) => ({
-        id: `item-${k + offset}-${new Date().getTime()}`,
-        content: `item ${k + offset}`,
-      })))
-}
-  
+const getItems = (count, offset = 0) => {
+  return Array.from({ length: count }, (v, k) => k).map((k) => ({
+    id: v4(),
+    content: `item ${k + offset}`,
+  }));
+};
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -25,7 +25,6 @@ const reorder = (list, startIndex, endIndex) => {
  * Moves an item from one list to another list.
  */
 const move = (source, destination, droppableSource, droppableDestination) => {
-
   const sourceClone = Array.from(source.items);
   const destClone = Array.from(destination.items);
   const [removed] = sourceClone.splice(droppableSource.index, 1);
@@ -39,9 +38,21 @@ const move = (source, destination, droppableSource, droppableDestination) => {
 };
 
 export default function App() {
-  const [state, setState] = useState([{name:"All",items:getItems(10)}, {name:"In Progress",items:getItems(5, 10)}]);
+  const [state, setState] = useState([
+    { id:v4(),name: "All", items: getItems(10) },
+    { id:v4(),name: "In Progress", items: getItems(5, 10) },
+  ]);
+
+  function addItem(collectionId)
+  {
+      const newState = [...state];
+      const index = state.findIndex((collection)=>collection.id===collectionId)
+      newState[index].items.push({id:`${v4}`,content:"New Item"})
+      setState(newState)
+  }
 
   function onDragEnd(result) {
+
     const { source, destination } = result;
 
     // dropped outside the list
@@ -75,70 +86,69 @@ export default function App() {
             <button
               type="button"
               onClick={() => {
-                setState([...state, {name:"New Category",items:[]}]);
+                setState([...state, { id:v4(),name: "New Category", items: [] }]);
               }}
             >
               Add new group
             </button>
-            
+
             <div style={{ display: "flex" }}>
               <DragDropContext onDragEnd={onDragEnd}>
                 {state.map((el, ind) => (
                   <div className="collection">
-                      <div className="collection-wrapper">
-                    <div className="header">
-                      <h2>{el.name}</h2>
-                    </div>
-                    <Droppable key={ind} droppableId={`${ind}`}>
-                      {(provided, snapshot) => (
-                        <div
-                          ref={provided.innerRef}
-                          className="list"
-                          // style={getListStyle(snapshot.isDraggingOver)}
-                          {...provided.droppableProps}
-                        >
-                          {el.items.map((item, index) => (
-                            <Draggable
-                              key={item.id}
-                              draggableId={item.id}
-                              index={index}
-                            >
-                              {(provided, snapshot) => (
-                                <div
-                                  ref={provided.innerRef}
-                                  {...provided.draggableProps}
-                                  {...provided.dragHandleProps}
-                                  className="list-card"
-                                >
+                    <div className="collection-wrapper">
+                      <div className="header">
+                        <h2>{el.name}</h2>
+                      </div>
+                      <Droppable key={ind} droppableId={`${ind}`}>
+                        {(provided, snapshot) => (
+                          <div
+                            ref={provided.innerRef}
+                            className="list"
+                            // style={getListStyle(snapshot.isDraggingOver)}
+                            {...provided.droppableProps}
+                          >
+                            {el.items.map((item, index) => (
+                              <Draggable
+                                key={item.id}
+                                draggableId={item.id}
+                                index={index}
+                              >
+                                {(provided, snapshot) => (
                                   <div
-                                    style={{
-                                      display: "flex",
-                                      justifyContent: "space-around",
-                                    }}
+                                    ref={provided.innerRef}
+                                    {...provided.draggableProps}
+                                    {...provided.dragHandleProps}
+                                    className="list-card"
                                   >
-                                    {item.content}
-                                    <button
-                                      type="button"
-                                      onClick={() => {
-                                        const newState = [...state];
-                                        newState[ind].items.splice(index, 1);
-                                        setState(
-                                          newState
-                                        );
+                                    <div
+                                      style={{
+                                        display: "flex",
+                                        justifyContent: "space-around",
                                       }}
                                     >
-                                      delete
-                                    </button>
+                                      {item.content}
+                                      <button
+                                        type="button"
+                                        onClick={() => {
+                                          const newState = [...state];
+                                          newState[ind].items.splice(index, 1);
+                                          setState(newState);
+                                        }}
+                                      >
+                                        delete
+                                      </button>
+                                    </div>
                                   </div>
-                                </div>
-                              )}
-                            </Draggable>
-                          ))}
-                          {provided.placeholder}
-                        </div>
-                      )}
-                    </Droppable>
-                  </div>
+                                )}
+                              </Draggable>
+                            ))}
+                            {provided.placeholder}
+                          </div>
+                        )}
+                      </Droppable>
+                      <div className="addItem" onClick={() =>{addItem(el.id)}}>+ Add a Card</div>
+                    </div>
                   </div>
                 ))}
               </DragDropContext>
