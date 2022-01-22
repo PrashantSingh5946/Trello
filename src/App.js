@@ -35,7 +35,6 @@ const move = (source, destination, droppableSource, droppableDestination) => {
   const result = {};
   result[droppableSource.droppableId] = sourceClone;
   result[droppableDestination.droppableId] = destClone;
-  console.log(result)
   return result;
 };
 
@@ -62,9 +61,7 @@ export default function App() {
       const newState = [...state];
       newState[sInd].items = result[sInd];
       newState[dInd].items = result[dInd];
-
-      //Not deleting the collection once it is empty
-      //setState(newState.filter((group) => group.length));
+      setState(newState);
     }
   }
 
@@ -126,9 +123,7 @@ export default function App() {
                                         const newState = [...state];
                                         newState[ind].items.splice(index, 1);
                                         setState(
-                                          newState.filter(
-                                            (group) => group.items.length
-                                          )
+                                          newState
                                         );
                                       }}
                                     >
