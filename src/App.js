@@ -4,7 +4,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import {v4} from "uuid";
 import "./App.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faTrash,faSwatchbook } from '@fortawesome/free-solid-svg-icons';
 import AddCategory from "./components/AddCategory";
 
 // fake data generator
@@ -80,7 +80,10 @@ export default function App() {
 
   return (
     <div className="App">
-      <div className="navbar"></div>
+      <div className="navbar">
+          <FontAwesomeIcon icon={faSwatchbook}></FontAwesomeIcon>
+          <span>Boards</span>
+      </div>
       <div className="container">
         <div className="collections-menu"></div>
         <div className="content board">
