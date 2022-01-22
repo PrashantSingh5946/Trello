@@ -34,28 +34,9 @@ const move = (source, destination, droppableSource, droppableDestination) => {
 
   return result;
 };
-const grid = 8;
-
-const getItemStyle = (isDragging, draggableStyle) => ({
-  // some basic styles to make the items look a bit nicer
-  userSelect: "none",
-  padding: grid * 2,
-  margin: `0 0 ${grid}px 0`,
-
-  // change background colour if dragging
-  background: isDragging ? "lightgreen" : "grey",
-
-  // styles we need to apply on draggables
-  ...draggableStyle,
-});
-const getListStyle = (isDraggingOver) => ({
-  background: isDraggingOver ? "lightblue" : "lightgrey",
-  padding: grid,
-  width: 250,
-});
 
 export default function App() {
-  const [state, setState] = useState([getItems(10), getItems(5, 10)]);
+  const [state, setState] = useState([{name:"All",items:getItems(10)}, {name:"In Progress",items:getItems(5, 10)}]);
 
   function onDragEnd(result) {
     const { source, destination } = result;
@@ -78,7 +59,8 @@ export default function App() {
       newState[sInd] = result[sInd];
       newState[dInd] = result[dInd];
 
-      setState(newState.filter((group) => group.length));
+      //Not deleting the collection once it is empty
+      //setState(newState.filter((group) => group.length));
     }
   }
 
@@ -89,29 +71,22 @@ export default function App() {
         <div className="collections-menu"></div>
         <div className="content board">
           <div>
-            {/* <button
+            <button
               type="button"
               onClick={() => {
-                setState([...state, []]);
+                setState([...state, {name:"New Category",items:[]}]);
               }}
             >
               Add new group
             </button>
-            <button
-              type="button"
-              onClick={() => {
-                setState([...state, getItems(1)]);
-              }}
-            >
-              Add new item
-            </button> */}
+            
             <div style={{ display: "flex" }}>
               <DragDropContext onDragEnd={onDragEnd}>
                 {state.map((el, ind) => (
                   <div className="collection">
                       <div className="collection-wrapper">
                     <div className="header">
-                      <h2>All</h2>
+                      <h2>{el.name}</h2>
                     </div>
                     <Droppable key={ind} droppableId={`${ind}`}>
                       {(provided, snapshot) => (
@@ -121,7 +96,7 @@ export default function App() {
                           // style={getListStyle(snapshot.isDraggingOver)}
                           {...provided.droppableProps}
                         >
-                          {el.map((item, index) => (
+                          {el.items.map((item, index) => (
                             <Draggable
                               key={item.id}
                               draggableId={item.id}
@@ -145,9 +120,9 @@ export default function App() {
                                       type="button"
                                       onClick={() => {
                                         const newState = [...state];
-                                        newState[ind].splice(index, 1);
+                                        newState[ind].items.splice(index, 1);
                                         setState(
-                                          newState.filter(
+                                          newState.ifilter(
                                             (group) => group.length
                                           )
                                         );
