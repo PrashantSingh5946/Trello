@@ -84,6 +84,15 @@ export default function App() {
     }
   }
 
+  function changeListName(id,object)
+  {
+    const newState =[...state]
+    const index = newState[activeBoard].lists.findIndex((element) => element.id==id)
+    newState[activeBoard].lists[index].name = object.target.value;
+    setState(newState)
+    
+  }
+
   const currentBoard = state[activeBoard];
   return (
     <div className="App">
@@ -130,7 +139,7 @@ export default function App() {
                 <div className="collection">
                   <div className="collection-wrapper">
                     <div className="header">
-                      <h2>{el.name}</h2>
+                      <textarea onChange={(object)=>{changeListName(el.id,object)}}>{el.name}</textarea>
                     </div>
                     <Droppable key={ind} droppableId={`${ind}`}>
                       {(provided, snapshot) => (
