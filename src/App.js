@@ -146,7 +146,7 @@ export default function App() {
                 <div className="collection">
                   <div className="collection-wrapper">
                     <div className="header">
-                      <textarea onChange={(object)=>{changeListName(el.id,object)}}>{el.name}</textarea>
+                      <textarea onChange={(object)=>{changeListName(el.id,object)}} value={el.name}></textarea>
                     </div>
                     <Droppable key={ind} droppableId={`${ind}`}>
                       {(provided, snapshot) => (

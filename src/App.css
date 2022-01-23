@@ -83,6 +83,7 @@ form.addBoard button {
 }
 
 .boardNames .boardName {
+  cursor: pointer;
   margin-left: 15px;
   color: rgb(180 174 174);
 }
@@ -124,7 +125,7 @@ form.addBoard button {
 }
 
 .board {
-  padding: 50px 100px;
+  padding: 50px 50px;
 }
 
 .collection .header {
