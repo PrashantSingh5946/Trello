@@ -28,7 +28,19 @@
 .boardNames
 {
   display: flex;
-  margin: 0px 30px;
+  margin: 0px 40px;
+}
+
+.boardNames .boardName
+{
+  margin-left: 15px;
+  color: rgb(180 174 174);
+}
+
+.boardNames .boardName.active
+{
+  color: #fff;
+
 }
 
 .container {

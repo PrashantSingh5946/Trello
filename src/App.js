@@ -98,7 +98,7 @@ export default function App() {
   }
 
   const currentBoard = state[activeBoard];
-  console.log(currentBoard)
+  console.log(currentBoard);
   return (
     <div className="App">
       <div className="navbar">
@@ -122,20 +122,14 @@ export default function App() {
           <span>Boards</span>
         </div>
         <div className="boardNames">
-          <div>Board 1</div>
-          <div>Board 2</div>
+          {state.map((el, ind) => (
+            <div className={ind===activeBoard?"boardName active":"boardName"} onClick={()=>{setActiveBoard(ind)}}>
+              {el.name}
+            </div>
+          ))}
         </div>
       </div>
       <div className="container">
-        <div className="collections-menu">
-          <span className="boardsMenu">
-            <span style={{ marginRight: "5px" }}>
-              <FontAwesomeIcon icon={faPlus} />
-            </span>
-            Add another list
-          </span>
-          <AddBoard addBoard={() => {}} />
-        </div>
         <div className="content board">
           <DragDropContext onDragEnd={onDragEnd}>
             <div
@@ -146,7 +140,7 @@ export default function App() {
                 alignItems: "flex-start",
               }}
             >
-              {currentBoard.lists.map((el,ind) => (
+              {currentBoard.lists.map((el, ind) => (
                 <div className="collection">
                   <div className="collection-wrapper">
                     <div className="header">
@@ -184,7 +178,9 @@ export default function App() {
                                       type="button"
                                       onClick={() => {
                                         const newState = [...state];
-                                        newState[activeBoard].lists[ind].items.splice(index, 1);
+                                        newState[activeBoard].lists[
+                                          ind
+                                        ].items.splice(index, 1);
                                         setState(newState);
                                       }}
                                     >
