@@ -6,6 +6,9 @@ import "./App.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faSwatchbook } from "@fortawesome/free-solid-svg-icons";
 import AddCategory from "./components/AddCategory";
+import AddBoard from "./components/AddBoard";
+import { faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
+import useLocalStorage from "./hooks/useLocalStorage";
 
 // fake data generator
 const getItems = (count, offset = 0) => {
@@ -40,17 +43,14 @@ const move = (source, destination, droppableSource, droppableDestination) => {
 };
 
 export default function App() {
-  const [state, setState] = useState([
-    { id: v4(), name: "All", items: getItems(10) },
-    { id: v4(), name: "In Progress", items: getItems(5, 10) },
-  ]);
-
+  const [activeBoard, setActiveBoard] = useState(0);
+  const [state, setState] = useLocalStorage("boards",[{name:"All",lists:[]}])
   function addItem(collectionId) {
     const newState = [...state];
     const index = state.findIndex(
       (collection) => collection.id === collectionId
     );
-    newState[index].items.push({ id: `${v4}`, content: "New Item" });
+    newState[activeBoard].lists[index].items.push({ id: `${v4()}`, content: "New Item" });
     setState(newState);
   }
 
