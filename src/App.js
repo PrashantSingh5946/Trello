@@ -89,16 +89,15 @@ export default function App() {
       newState[activeBoard].lists[sInd].items = items;
       setState(newState);
     } else {
-      const result = move(state[sInd], state[dInd], source, destination);
+      const result = move(state[activeBoard].lists[sInd], state[activeBoard].lists[dInd], source, destination);
       const newState = [...state];
-      newState[sInd].items = result[sInd];
-      newState[dInd].items = result[dInd];
+      newState[activeBoard].lists[sInd].items = result[sInd];
+      newState[activeBoard].lists[dInd].items = result[dInd];
       setState(newState);
     }
   }
 
   const currentBoard = state[activeBoard];
-  console.log(currentBoard);
   return (
     <div className="App">
       <div className="navbar">
