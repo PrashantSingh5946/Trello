@@ -184,7 +184,7 @@ export default function App() {
                                       type="button"
                                       onClick={() => {
                                         const newState = [...state];
-                                        newState[ind].items.splice(index, 1);
+                                        newState[activeBoard].lists[ind].items.splice(index, 1);
                                         setState(newState);
                                       }}
                                     >
