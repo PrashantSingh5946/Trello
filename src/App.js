@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import ReactDOM from "react-dom";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { v4 } from "uuid";
 import "./App.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faSwatchbook } from "@fortawesome/free-solid-svg-icons";
 import AddCategory from "./components/AddCategory";
-import AddBoard from "./components/AddBoard";
-import { faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
 import useLocalStorage from "./hooks/useLocalStorage";
+import Modal from "./components/Modal";
 
 // fake data generator
 const getItems = (count, offset = 0) => {
@@ -43,20 +41,28 @@ const move = (source, destination, droppableSource, droppableDestination) => {
 };
 
 export default function App() {
+  const[addBoardVisibility,setAddBoardVisibility] = useState(false);
   const [activeBoard, setActiveBoard] = useState(0);
-  const [state, setState] = useLocalStorage("boards",[{name:"All",lists:[]}])
-  function addItem(collectionId) {
+  const [state, setState] = useLocalStorage("boards",[{id:v4(),name:"All",lists:[{id:v4(),name:"List",items:[]}]}])
+  function addItem(collectionId,name) {
     const newState = [...state];
     const index = state[activeBoard].lists.findIndex(
       (collection) => collection.id === collectionId
     );
-    newState[activeBoard].lists[index].items.push({ id: `${v4()}`, content: "New Item" });
+    newState[activeBoard].lists[index].items.push({ id: `${v4()}`, content: name });
     setState(newState);
   }
 
   function addCategory(name) {
     const newState = [...state];
     newState[activeBoard].lists.push({ id: v4(), name: name, items: [] })
+    setState(newState)
+  }
+
+  function addBoard(name)
+  {
+    const newState = [...state];
+    newState.push({id:v4(),name:name,lists:[]})
     setState(newState)
   }
 
@@ -82,6 +88,15 @@ export default function App() {
       newState[activeBoard].lists[dInd].items = result[dInd];
       setState(newState);
     }
+  }
+
+  function changeListName(id,object)
+  {
+    const newState =[...state]
+    const index = newState[activeBoard].lists.findIndex((element) => element.id==id)
+    newState[activeBoard].lists[index].name = object.target.value;
+    setState(newState)
+    
   }
 
   const currentBoard = state[activeBoard];
@@ -114,6 +129,7 @@ export default function App() {
             </div>
           ))}
         </div>
+        <button className="addBoard" onClick={()=>{setAddBoardVisibility(true)}}> + Add Board</button>
       </div>
       <div className="container">
         <div className="content board">
@@ -130,7 +146,7 @@ export default function App() {
                 <div className="collection">
                   <div className="collection-wrapper">
                     <div className="header">
-                      <h2>{el.name}</h2>
+                      <textarea onChange={(object)=>{changeListName(el.id,object)}} value={el.name}></textarea>
                     </div>
                     <Droppable key={ind} droppableId={`${ind}`}>
                       {(provided, snapshot) => (
@@ -151,7 +167,7 @@ export default function App() {
                                   ref={provided.innerRef}
                                   {...provided.draggableProps}
                                   {...provided.dragHandleProps}
-                                  className="list-card"
+                                  className={snapshot.isDragging?"list-card dragging":"list-card"}
                                 >
                                   <div
                                     style={{
@@ -181,15 +197,9 @@ export default function App() {
                         </div>
                       )}
                     </Droppable>
-                    <div
-                      className="addItem"
-                      onClick={() => {
-                        addItem(el.id);
-                      }}
-                    >
-                      + Add a Card
-                    </div>
+                    <AddCategory text="Add a item"  addCategory={(name)=>{addItem(el.id,name)} }></AddCategory>
                   </div>
+                  
                 </div>
               ))}
               <div className="collection">
@@ -199,6 +209,7 @@ export default function App() {
           </DragDropContext>
         </div>
       </div>
+      {addBoardVisibility && <Modal closeHandler={()=>{setAddBoardVisibility(false)}} submitHandler={(name)=>{addBoard(name)}}></Modal>}
     </div>
   );
 }
