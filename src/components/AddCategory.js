@@ -34,7 +34,7 @@ export default function AddCategory({addCategory}) {
       {isFormVisible && (
         <form className="addList" onSubmit={submitHandler}>
           <div className="row">
-            <input type="text" placeholder="Enter list title..." ref={nameRef}></input>
+            <input type="text" placeholder="Enter list title..." ref={nameRef} autoFocus></input>
           </div>
           <div className="row">
               <button type="submit">Add List</button>
