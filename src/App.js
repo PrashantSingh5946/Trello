@@ -70,7 +70,9 @@ export default function App() {
   }
 
   function addCategory(name) {
-    setState([...state, { id: v4(), name: name, items: [] }]);
+    const newState = [...state];
+    newState[activeBoard].lists.push({ id: v4(), name: name, items: [] })
+    setState(newState)
   }
 
   function onDragEnd(result) {
