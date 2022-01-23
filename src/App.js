@@ -62,10 +62,10 @@ export default function App() {
 
   function addItem(collectionId) {
     const newState = [...state];
-    const index = state.findIndex(
+    const index = state[activeBoard].lists.findIndex(
       (collection) => collection.id === collectionId
     );
-    newState[index].items.push({ id: `${v4}`, content: "New Item" });
+    newState[activeBoard].lists[index].items.push({ id: `${v4}`, content: "New Item" });
     setState(newState);
   }
 
