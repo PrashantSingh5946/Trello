@@ -15,9 +15,32 @@
   overflow: hidden;
 }
 
-.navbar {
-  height: 50px;
-  background: azure;
+.banner
+{
+  max-width: 200px;
+  margin: 0px 10px;
+}
+
+.banner svg
+{
+  margin-right: 5px;
+}
+.boardNames
+{
+  display: flex;
+  margin: 0px 40px;
+}
+
+.boardNames .boardName
+{
+  margin-left: 15px;
+  color: rgb(180 174 174);
+}
+
+.boardNames .boardName.active
+{
+  color: #fff;
+
 }
 
 .container {
@@ -137,16 +160,13 @@
 
 /* navbar*/
 .navbar {
-  height: 50px;
-  background: azure;
-  padding: 5px 20px;
-  font-size: xx-large;
+  color: white;
+  display: flex;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.45);
+  padding: 6px 4px;
 }
 
-.navbar span {
-  font-weight: 600;
-  padding: 5px 10px;
-}
 
 .addCategory {
   padding: 15px;

@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus,faTimes } from "@fortawesome/free-solid-svg-icons";
 import CloseIcon from '@mui/icons-material/Close';
 
-export default function AddCategory({addCategory}) {
+export default function AddCategory({addCategory,text}) {
   const [isFormVisible, setFormVisibility] = useState(false);
   const nameRef = useRef();
   function submitHandler(e)
@@ -27,7 +27,7 @@ export default function AddCategory({addCategory}) {
             <span style={{ marginRight: "5px" }}>
               <FontAwesomeIcon icon={faPlus} />
             </span>
-            Add another list
+            {text}
           </span>
         </div>
       )}
