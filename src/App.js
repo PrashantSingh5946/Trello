@@ -84,9 +84,9 @@ export default function App() {
     const dInd = +destination.droppableId;
 
     if (sInd === dInd) {
-      const items = reorder(state[sInd].items, source.index, destination.index);
+      const items = reorder(state[activeBoard].lists[sInd].items, source.index, destination.index);
       const newState = [...state];
-      newState[sInd].items = items;
+      newState[activeBoard].lists[sInd].items = items;
       setState(newState);
     } else {
       const result = move(state[sInd], state[dInd], source, destination);
