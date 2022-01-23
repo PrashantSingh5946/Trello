@@ -37,7 +37,7 @@ export default function AddCategory({addCategory,text}) {
             <input type="text" placeholder="Enter list title..." ref={nameRef} autoFocus></input>
           </div>
           <div className="row">
-              <button type="submit">Add List</button>
+              <button type="submit">{text}</button>
               <span className="close" onClick={()=>{setFormVisibility(false)}}><CloseIcon></CloseIcon></span>
               
           </div>

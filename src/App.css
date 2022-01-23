@@ -255,7 +255,7 @@ form.addBoard button {
   box-shadow: inset 0 0 0 2px #0079bf;
   display: block;
   margin: 0;
-  width: 228px;
+  width: -webkit-fill-available;
   padding: 8px 12px;
   border-radius: 3px;
   border: none;
@@ -283,4 +283,10 @@ span svg {
 }
 .addList button:hover {
   background: #026aa7;
+}
+
+.dragging {
+  transform: rotate(358deg);
+  background: #333;
+  color: #fff;
 }

@@ -44,12 +44,12 @@ export default function App() {
   const[addBoardVisibility,setAddBoardVisibility] = useState(false);
   const [activeBoard, setActiveBoard] = useState(0);
   const [state, setState] = useLocalStorage("boards",[{id:v4(),name:"All",lists:[{id:v4(),name:"List",items:[]}]}])
-  function addItem(collectionId) {
+  function addItem(collectionId,name) {
     const newState = [...state];
     const index = state[activeBoard].lists.findIndex(
       (collection) => collection.id === collectionId
     );
-    newState[activeBoard].lists[index].items.push({ id: `${v4()}`, content: "New Item" });
+    newState[activeBoard].lists[index].items.push({ id: `${v4()}`, content: name });
     setState(newState);
   }
 
@@ -167,7 +167,7 @@ export default function App() {
                                   ref={provided.innerRef}
                                   {...provided.draggableProps}
                                   {...provided.dragHandleProps}
-                                  className="list-card"
+                                  className={snapshot.isDragging?"list-card dragging":"list-card"}
                                 >
                                   <div
                                     style={{
@@ -197,15 +197,9 @@ export default function App() {
                         </div>
                       )}
                     </Droppable>
-                    <div
-                      className="addItem"
-                      onClick={() => {
-                        addItem(el.id);
-                      }}
-                    >
-                      + Add a Card
-                    </div>
+                    <AddCategory text="Add a item"  addCategory={(name)=>{addItem(el.id,name)} }></AddCategory>
                   </div>
+                  
                 </div>
               ))}
               <div className="collection">
