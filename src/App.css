@@ -27,8 +27,7 @@ button.addBoard {
   margin-left: 10px;
 }
 
-button.delete
-{
+button.delete {
   background: #d12929;
 }
 
@@ -301,8 +300,17 @@ span svg {
   transition: 0.2s ease-in;
 }
 
+select {
+  background: none;
+  color: white;
+  border: none;
+  font-size: larger;
+}
 
+option
+{
+  background: none;
+}
 @media only screen and (max-width: 768px) {
   /* For mobile phones: */
-
 }

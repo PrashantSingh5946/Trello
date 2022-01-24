@@ -122,6 +122,7 @@ export default function App() {
   }
 
   const currentBoard = state[activeBoard];
+  const widthRatio = window.innerWidth > 768;
   return (
     <div className="App">
       <div className="navbar">
@@ -144,19 +145,30 @@ export default function App() {
           <FontAwesomeIcon icon={faSwatchbook}></FontAwesomeIcon>
           <span>Boards</span>
         </div>
-        <div className="boardNames">
-          {state.map((el, ind) => (
-            <div
-            key={ind}
-              className={ind === activeBoard ? "boardName active" : "boardName"}
-              onClick={() => {
-                setActiveBoard(ind);
-              }}
-            >
-              {el.name}
-            </div>
-          ))}
-        </div>
+        {widthRatio ? (
+          <div className="boardNames">
+            {state.map((el, ind) => (
+              <div
+                key={ind}
+                className={
+                  ind === activeBoard ? "boardName active" : "boardName"
+                }
+                onClick={() => {
+                  setActiveBoard(ind);
+                }}
+              >
+                {el.name}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <select id="boards" defaultValue={state[activeBoard]} onChange={(e)=>{setActiveBoard(e.target.value)}}>
+            {
+              state.map((board,ind) => <option value={ind} key={ind} >{board.name}</option>)
+            }
+          </select>
+        )}
+
         <button
           className="addBoard"
           onClick={() => {
@@ -166,17 +178,19 @@ export default function App() {
           {" "}
           +
         </button>
-        {state.length?(
+        {state.length ? (
           <button className="addBoard delete" onClick={deleteActiveBoard}>
             {" "}
             <FontAwesomeIcon icon={faTrash} />
           </button>
-        ):""}
+        ) : (
+          ""
+        )}
       </div>
       <div className="container">
         <div className="content board">
-          {
-             state.length?(<DragDropContext onDragEnd={onDragEnd}>
+          {state.length ? (
+            <DragDropContext onDragEnd={onDragEnd}>
               <div
                 style={{
                   display: "grid",
@@ -262,9 +276,10 @@ export default function App() {
                   <AddCategory text="Add a list" addCategory={addCategory} />
                 </div>
               </div>
-            </DragDropContext>):"No Boards"
-          }
-          
+            </DragDropContext>
+          ) : (
+            "No Boards"
+          )}
         </div>
       </div>
       {addBoardVisibility && (
