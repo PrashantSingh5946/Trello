@@ -164,12 +164,12 @@ export default function App() {
           }}
         >
           {" "}
-          + Add Board
+          +
         </button>
         {state.length?(
           <button className="addBoard delete" onClick={deleteActiveBoard}>
             {" "}
-            Delete Board <FontAwesomeIcon icon={faTrash} />
+            <FontAwesomeIcon icon={faTrash} />
           </button>
         ):""}
       </div>
