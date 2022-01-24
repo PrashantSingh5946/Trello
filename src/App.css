@@ -24,6 +24,12 @@ button.addBoard {
   margin-top: 2px;
   border-radius: 3px;
   font-size: 12px;
+  margin-left: 10px;
+}
+
+button.delete
+{
+  background: #d12929;
 }
 
 form.addBoard {
@@ -33,6 +39,7 @@ form.addBoard {
   max-width: 200px;
   margin-left: 40%;
   margin-top: 19%;
+  position: absolute;
 }
 
 form.addBoard input {

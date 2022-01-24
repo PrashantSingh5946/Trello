@@ -9,7 +9,7 @@ export default function Modal({ submitHandler, closeHandler }) {
     closeHandler();
   }
   return (
-    <div className="modalBackdrop" onClick={closeHandler}>
+    <div className="modalBackdrop">
       <form className="addBoard" onSubmit={onSubmit}>
         <div className="row">
           <input
